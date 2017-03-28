@@ -18,6 +18,5 @@ in SublimeText 3:
 
 on the command line run the following command to create the PDF document from the markdown file:
 ```
-pandoc writing_assignment_machine_learning.markdown --latex-engine=xelatex --filter pandoc-citeproc \
- -o rnn_writing_assignment.pdf
+pandoc summary_RNN_Marcel_Canclini.mdown --latex-engine=xelatex --filter pandoc-citeproc -o Recurrent\ Neural\ Networks\ \(Marcel_Canclini\).pdf
 ```

@@ -11,17 +11,17 @@ geometry: margin=1.2cm
 ---
 
 # Abstract
-"A Critical Review of Recurrent Neural Networks for Sequence Learning" [@lipton_critical_2015] gibt eine Übersicht von Modellen, welche zeitliche Zusammenhänge erkennen. Dabei wird neben der Geschichte und aktuellen Applikationen speziell auf den Long Short Term Memory Baustein (LSTM) sowie die Bidirectional Recurrent Neural Network (BRNN) Architektur eingegangen. Es gibt zudem einen Überblick über Feedforward Netzwerke, deren Architekturen sowie Beschreibungen der wichtigsten damit verbunderen Begriffe.
+"A Critical Review of Recurrent Neural Networks for Sequence Learning" [@lipton_critical_2015] gibt eine Übersicht von Modellen, welche zeitliche Zusammenhänge erkennen. Dabei wird neben der Geschichte und aktuellen Applikationen speziell auf den Long Short Term Memory Baustein (LSTM) sowie die Bidirectional Recurrent Neural Network (BRNN) Architektur eingegangen. Es gibt zudem einen Überblick über Feedforward Netzwerke, deren Architekturen sowie Beschreibungen der wichtigsten damit verbundenen Begriffe.
 
-Dieses Dokument beschreibt die wichtigsten Punkte zum allgemeinem Verständnis von Neuronalen Netzen anhand des Berichts von Lipton und setzt sich danach detailierter mit Recurrent Neural Networks (RNN) auseinandersetzen um die Möglichkeiten zur Anwendung in der Klassifikation und Metadatenextraktion von Texten aufzuzeigen.
+Dieses Dokument beschreibt die wichtigsten Punkte zum allgemeinem Verständnis von Neuronalen Netzen anhand des Berichts von Lipton und setzt sich danach detaillierter mit Recurrent Neural Networks (RNN) auseinandersetzen um die Möglichkeiten zur Anwendung in der Klassifikation und Metadatenextraktion von Texten aufzuzeigen.
 
 # Warum das Thema Recurrent Neural Networks?
-Im Rahmen des Machine Learing Moduls (CAS Data Science Applications) wurden die Grundlagen von Neuronalen Netzen sowie ein Einblick in Convolutional Neural Networks (CNN) vermittelt.
+Im Rahmen des Machine Learning Moduls (CAS Data Science Applications) wurden die Grundlagen von Neuronalen Netzen sowie ein Einblick in Convolutional Neural Networks (CNN) vermittelt.
 
 CNN sind bekannt, im Bereich der Bild- und Spracherkennung sehr gute Resultate zu erzielen. Standard Feedforward Netzwerke haben die Problematik keine zeitlichen Abhängigkeiten zu kennen und sind somit nicht in der Lage von vergangenen oder zukünftigen Ereignissen auf ein Resultat zu schliessen.
 Um die Übersicht von Neuronalen Netzen zu vervollständigen fehlen aus meiner Sicht die Recurent Neural Networks (RNN).
 
-Im Bereich Gesundheitswesen ist durch eHealth die Digitalisierung und Strukturierung von medizinischen Dokumente ein grosses Thema. Der Grossteil der Dokumente wird heute unstrukturiert erfasst. Mittels Machine Learning, speziell RNN besteht die Möglichkeit aus diesen Dokumenten strukturierte Medatdaten zu extrahieren. Beispiel sind Behandlungsdatum, Diagnosen, Medikation, etc.
+Im Bereich Gesundheitswesen ist durch eHealth die Digitalisierung und Strukturierung von medizinischen Dokumente ein grosses Thema. Der Grossteil der Dokumente wird heute unstrukturiert erfasst. Mittels Machine Learning, speziell RNN besteht die Möglichkeit aus diesen Dokumenten strukturierte Metadaten zu extrahieren. Beispiele sind Behandlungsdatum, Diagnosen, Medikation, etc.
 
 # Zusammenfassung
 ## Neuronale Netzwerke
@@ -34,23 +34,23 @@ Somit berechnet sich der Wert eines Neurons indem auf die Summe der gewichteten 
 $$v_j = l_j\left(\sum_{j'}w_{jj'} \cdot v'_{j'}\right) $$
 
 ## Feedforward Neural Networks
-Diese Klasse von Neuronalen Netzen lassen keine Zirkelbezüge zu. Die Knoten werden in einzelnen Layer angeordnet, wobei zwischen Eingabe-, Hidden- und Ausgabe-Layer unterschieden wird. Jedes Netz hat einen Eingabe- und einen Ausgabe-Layer, kann aber mehrere Hidden Layers haben. Die Layers sind aufeinandergeschichtet, wobei die Ausgabe eines Layers auf Basis der Ausgabe des vorangegangenen Layers berechnet wird.
+Diese Klasse von Neuronalen Netzen lassen keine Zirkelbezüge zu. Die Knoten werden in einzelnen Layer angeordnet, wobei zwischen Eingabe-, Hidden- und Ausgabe-Layer unterschieden wird. Jedes Netz hat einen Eingabe- und einen Ausgabe-Layer, kann aber mehrere Hidden Layers haben. Die Layers sind aufeinandergeschichtet, wobei die Ausgabe eines Layers auf Basis der Ausgabe des vorangegangenen berechnet wird.
 
 ![Einfaches Feedforward Netzwerk mit jeweils einem Input, Hidden und Output Layer [@lipton_critical_2015, p. 8]][feedforward_network]
 
-Nach jeder Verarbeitung einer Eingabe wird der Status des Netz zurückgesetzt. Es verliert also die Information über die soeben verarbeiteten Daten. Ein solches Netz ist geeignet bei voneinander unabhägigen Eingabewerten.
-Bei Applikationen, bei denen eine zeitliche Abfolge vorhanden ist (video, audio, text, etc.) und eine Abhängikeit der Eingabedaten gegeben ist, ergibt sich ein Problem.
+Nach jeder Verarbeitung einer Eingabe wird der Status des Netzes zurückgesetzt. Es verliert also die Information über die soeben verarbeiteten Daten. Ein solches Netz ist geeignet bei voneinander unabhängigen Eingabewerten.
+Bei Applikationen, bei denen eine zeitliche Abfolge vorhanden ist (video, audio, text, etc.) und eine Abhängigkeit der Eingabedaten gegeben ist, ergibt sich ein Problem.
 
 ## Backpropagation Algorithmus
-Der Backpropagation Algorithmus ist die meist verbreiteste Art ein Neuronales Netz zu trainieren. Dabei wird der Ausgabefehler mittels Differenzierung der Loss Funktion im Netz züruckgespielt. Jedes einzelne Gewicht $w$ im Netzwerk wird mittels Gradient Descent so angepasst, dass bei erneutem Anlegen der selben Eingabewerte eine Annäherung der Ausgabe $\hat{y}$ an den realen Wert $y$ erfolgt.
+Der Backpropagation Algorithmus ist die meist verbreitete Art ein Neuronales Netz zu trainieren. Dabei wird der Ausgabefehler mittels Differenzierung der Loss Funktion im Netz zurückgespielt. Jedes einzelne Gewicht $w$ im Netzwerk wird mittels Gradient Descent so angepasst, dass bei erneutem Anlegen der selben Eingabewerte eine Annäherung der Ausgabe $\hat{y}$ an den realen Wert $y$ erfolgt.
 
 ##Recurrent Neural Network
-RNN sind eine Unterart der Feedforward Netze. Im Unterschied zur herkömmlichen Architektur, wird bei RNN im Hidden Layer ein Zirkelbezug eines Neurons mit sich selbst erstellt. Dies ermöglicht den Vorhergehenden Wert in den nächste Zeitschritt zu übernehmen.
+RNN sind eine Unterart der Feedforward Netze. Im Unterschied zur herkömmlichen Architektur, wird bei RNN im Hidden Layer ein Zirkelbezug eines Neurons mit sich selbst erstellt. Dies ermöglicht den Vorhergehenden Wert in den nächsten Zeitschritt zu übernehmen.
 Ein mit sich selbst verbundener Hidden Layer lässt sich über mehrere Zeitschritte “auffalten” und entspricht dann einem Deep Network mit einem Hidden Layer pro Zeitschritt. Ein solches Netz kann wiederum mittels Backpropagation trainiert werden.
 
 So lässt sich eine zeitliche Abfolge in einem neuronalen Netz modellieren und zeitliche Abhängigkeiten von Eingabedaten berücksichtigen.
 
-![RN: links als Architektur und rechts aufgefalltet um 2 Zeitschritte zu visualisieren.[@lipton_critical_2015, fig. 3 und 4]][recurrent_neural_net_unfold]
+![RN: links als Architektur und rechts aufgefaltet um 2 Zeitschritte zu visualisieren.[@lipton_critical_2015, fig. 3 und 4]][recurrent_neural_net_unfold]
 
 Eine Schwierigkeit bei RNN ist das **Trainieren der Modelle** da sich das Modell über die Zeitschritte optimieren soll. Dabei kommt es zu verschwindenden oder exponentiell explodierenden Gradienten je nach Anzahl Zeitschritte und Aktivierungsfunktion. Details sind [@lipton_critical_2015, chap. 3.2] zu entnehmen.
 Diesem Problem kann man mittels Regularisierung entgegenwirken. **Truncated backpropagation through time (TBPTT)** ist eine Variante, bei welcher die Anzahl der Zeitschritte eingeschränkt wird.
@@ -64,7 +64,7 @@ Die Memory Zelle besteht aus 3 Gates (Input, Forget und Output Gate) sowie einem
 ![LSTM Modul inklusive der Peephole Connections welche durch Gers und Schmidhuber vorgestellt wurden [@gers_recurrent_2000]][lstm]
 
 ### Bidirectional Recurrent Neural Network (BRNN)
-Durch Schuster und Paliwal [@schuster_bidirectional_1997] vorgestellte Architektur. Hierbei werden neben den vergangenen auch die zukünftigen Ereignisse miteinbezogen. Dies ermöglicht eine Aussage zum Zeitpunkt $t$, welche auf Daten beruht die erst in einem zukünfitgen Zeischritt bekannt sind.
+Durch Schuster und Paliwal [@schuster_bidirectional_1997] vorgestellte Architektur. Hierbei werden neben den vergangenen auch die zukünftigen Ereignisse miteinbezogen. Dies ermöglicht eine Aussage zum Zeitpunkt $t$, welche auf Daten beruht die erst in einem zukünftigen Zeitschritt bekannt sind.
 
 Ein BRNN umfasst 2 Hidden Layers, wobei beide mit der Eingabe und der Ausgabe verbunden sind. Der Unterschied der beiden Layers besteht in der zeitlichen Verbindung. Der erste Layer hat Verbindungen vom vorhergehenden Zeitschritt, wobei im zweiten Layer die Richtung der Verbindungen gedreht wird und die Aktivierung abhängig vom zukünftigen Zeitschritt ist.
 
@@ -72,7 +72,7 @@ Ein BRNN umfasst 2 Hidden Layers, wobei beide mit der Eingabe und der Ausgabe ve
 
 Ein Bidirectional Recurrent Neural Networks bedingt eine **fixe Länge** der Eingabesequenz um mittels Backpropagation trainiert zu werden. Dies ist die **Limitation** der BRNN. Sie können nicht mit kontinuierlichen Sequenzen umgehen. Es braucht einen klar definierten zeitlichen Endpunkt, sowohl in der Zukunft als auch in der Vergangenheit. Eine Vorhersage von zukünftigen Ereignissen kann nicht gemacht.
 
-Ein guter, anschaulicher Anwendungsfall ist part-of-speech tagging (POS Tagging). Dabei soll die Wortart eines Wortes innerhalb eines Satzes bestimmt werden. Die Sequenz der Wörter kann dabei als zeitliche Abfolge betrachtet werden. Für die Bestimmung eines Wortes in der Mitte des Satzes sind nicht nur die vorhergehenden, sonder auch die folgenden Wörter relevant.
+Ein guter, anschaulicher Anwendungsfall ist part-of-speech tagging (POS Tagging). Dabei soll die Wortart eines Wortes innerhalb eines Satzes bestimmt werden. Die Sequenz der Wörter kann dabei als zeitliche Abfolge betrachtet werden. Für die Bestimmung eines Wortes in der Mitte des Satzes sind nicht nur die vorhergehenden, sondern auch die folgenden Wörter relevant.
 
 ### Kombination und Anwendungen von LSTM und BRNN
 Die beiden Ansätze lassen sich sehr gut kombinieren. LSTM ist ein neuer Baustein, welcher innerhalb eines Hidden Layers verwendet werden kann. BRNN verbindet die vorhandenen Hidden Layers auf eine neue Art.
@@ -81,9 +81,9 @@ Diese Kombination wurde als **BLSTM** bei der Handschriftenerkennung und Phonem 
 Aktuelle Einsatzgebiete von LSTM und BRNN sind im Bereich von Text Processing (z.B. Übersetzung von Texten) und Image Captioning (Generierung von Bildunterschriften) zu finden.
 
 # Schlussfolgerung
-"A Critical Review of Recurrent Neural Networks for Sequence Learning" erklärt nicht nur anschaulich wie Recurrent Neural Networks funktionieren, sonder gibt auch eine gut strukturierte Einführung in Neuronale Netze und die wichtigsten Begriffe in diesem Bereich. Auch die kurze Erklärung der verwendeten Nomenklatur hilft beim weiteren Studium von Material in diesem Fachgebiet.
+"A Critical Review of Recurrent Neural Networks for Sequence Learning" erklärt nicht nur anschaulich wie Recurrent Neural Networks funktionieren, sondern gibt auch eine gut strukturierte Einführung in Neuronale Netze und die wichtigsten Begriffe in diesem Bereich. Auch die kurze Erklärung der verwendeten Nomenklatur hilft beim weiteren Studium von Material in diesem Fachgebiet.
 
-Applikationen wie Übesetzung von Texten oder Part-Of-Speech Tagging zeigen, dass eine Anwendung zur Metadatenextraktion auf unstrukturierten, medizinischen Dokumente ein Anwendungsfall sein kann.
+Applikationen wie Übersetzung von Texten oder Part-Of-Speech Tagging zeigen, dass eine Anwendung zur Metadatenextraktion auf unstrukturierten, medizinischen Dokumente ein Anwendungsfall sein kann.
 
 # Referenzen
 
